@@ -1,0 +1,27 @@
+#### Simulación de series de tiempo ####
+#### vamos a simular un indicador
+###para la simulación en principio necesitamos alguna info
+### valor máx, min,  el num. de datos
+
+## en este ejemplo vamos a proponer la población en México
+## que el evalor minimo será 100, máx 120, 15 datos que inicie en 2000
+pob <- sample(100:120, 15, replace = F)
+pob
+### la convertimos a serie de tiempo
+pobts <- ts (pob, frequency = 1, start = (2000))
+end (pobts) ### en que año termina
+start (pobts)### en que año inicia
+plot(pobts) ###darle formato, graficar
+plot(aggregate(pobts))
+
+
+#### bajar del inegi la ocipación de las personas
+### importar csv
+
+infor4<- read.csv("C://Users//USUARIO//Documents//info.csv")
+### convertir sus datos en serie de tiempo con la info que ya se tiene
+infor4ts <- ts (infor4, frequency = 4, start = (2005))
+end (infor4ts)
+start(infor4ts)
+plot(infor4ts)
+plot(infor4ts, ylim =c(0,100))
