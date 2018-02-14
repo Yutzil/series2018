@@ -1,0 +1,24 @@
+#### Ahora vamos a intentar una serie de tiempo con datos faltantes ####
+### datos de registro de enfermos del 2000 al 2010 semestral
+## 350, 358, 367, 367, 380, 388, 402, 415, 432, 450, NA, NA, NA, NA, 367, 342, 324, 315, 310, 298
+
+y<- c(350, 358, 367, 367, 380, 388, 402, 415, 432, 450, NA, NA, NA, NA, 367, 342, 324, 315, 310, 298)
+
+# Grafiquen este vector
+plot (y)
+# Declaren y grafiquen esta serie
+yts <- ts(y, start =2000, end= 2010, frequency =2)
+plot (yts)
+
+# Imputar datos faltantes ¿Cómo lo harian?
+yts I[11.14] <- mean (yts, na.rm=T)
+# Grafiquen la nueva serie con la imputación
+plot (yts)
+
+
+######## Por último grafiquen la serie de tiempo ########
+### EuStockMarkets con la función plot... ¿Qué observan?
+plot(EuStockMarkets)
+# Ahora grafiquen EuStockMarkets con la sigueinte función
+# ts.plot (EuStockMarkets, col= 1:4)
+ts.plot (EuStockMarkets, col= 1:4)
