@@ -1,0 +1,65 @@
+aa <- AirPassengers
+plot(aa)
+plot(aggregate(aa)) ##Con el aggregate se muestra la tendencia de la serie de tiempo.
+boxplot(aa~cycle(aa)) ##Se expone una gráfica de cajas por periodo de la serie de tiempo.
+deso <- read.csv("C://Users//USUARIO//Documents//desocupa.csv")
+####si quisieramos que inice en el tercer trimestre se coloca ##start = c(2005,3)##
+desots <- ts(deso, frequency = 4, start = 2005)
+deseanual <- aggregate(desots)/4
+x11() ##Abrir una ventana
+layout(1:2) ##Graficar juntas los plots
+plot(desots)
+plot(deseanual)
+
+deso1 <- window(desots, start = c(2008,2), end = c(2015,4))
+# tasa de ocupación parcial y desocupación
+# tasa de asalariados
+# tasa de informalidad laboral til1
+
+### Ejemplo ###
+ejem <- read.csv("C://Users//USUARIO//Documents//tasas.csv")
+ocupadesots <- ts(ejem[,1], frequency = 4, start = 2005)
+asalariadots <- ts(ejem[,2], frequency = 4, start = 2005)
+inforts <- ts(ejem[,3], frequency = 4, start = 2005)
+multiple <- ts.intersect(ocupadesots, asalariadots, inforts) ##Declaramos una serie de tiempo multiple en r 
+plot(multiple)
+
+###### Ejercicio ######
+## Obtenga (de donde quieran) 4 series de tiempo con minimo 30 datos
+## las series de tiempo tienen que tener sustento para compararlas
+## una vez que obtenga estas bases tiene que:
+# importarlas, declararlas como serie de tiempo (separadas),
+# graficarlas, despues crear una serie de tiempo multiple
+# y graficarlas como serie de tiempo multiple
+# después dividir dos de estas series de tiempo en 3 periodos de intervalos iguales
+### Por ultimo, eligen 2 series de tiempo y apliquen el aggregate
+# para conocer su tendencia y hacer las graficas de cajar e interpretar los périodos de estas series.
+
+ejercicio <- read.csv("C://Users//USUARIO//Documents//parti.csv")
+participacionts <- ts(ejercicio[,1], frequency = 4, start = 2005)
+plot(participacionts)
+
+desocupacionts <- ts(ejercicio[,2], frequency = 4, start = 2005)
+plot(desocupacionts)
+
+subocupacionts <- ts(ejercicio[,3], frequency = 4, start = 2005)
+plot(subocupacionts)
+
+cco <- ts(ejercicio[,4], frequency = 4, start = 2005)
+plot(cco)
+
+multiple <- ts.intersect(participacionts, desocupacionts, subocupacionts, cco)
+plot(multiple)
+
+
+plot(aggregate(desocupacionts)) 
+plot(aggregate(subocupacionts))
+boxplot(desocupacionts~cycle(desocupacionts))
+boxplot(subocupacionts~cycle(subocupacionts))
+layout(1:2) ##Graficar juntas los plots
+plot(desocupacionts)
+plot(subocupacionts)
+
+layout(1:2)
+boxplot(desocupacionts~cycle(desocupacionts))
+boxplot(subocupacionts~cycle(subocupacionts))
