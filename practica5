@@ -1,0 +1,14 @@
+partidos <- c(36,44,40,46,46,40,49,41,40)
+canastas <- c(13,20,20,20,20,28,21,22,31)
+n <- length(partidos)
+(partidos-mean(partidos))
+(canastas-mean(canastas))
+sum((partidos-mean(partidos))*(canastas-mean(canastas)))/(n-1)
+cov <- sum((partidos-mean(partidos))*(canastas-mean(canastas)))/(n-1)
+cov
+covarianza <- cov(partidos, canastas)
+covarianza
+
+corr <- cov/(sd(partidos)* sd(canastas))
+corr
+cor(partidos, canastas)
