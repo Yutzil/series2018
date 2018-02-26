@@ -1,0 +1,44 @@
+serie1 <- sample(300:1000,120)
+tserie <- ts(serie1, frequency =12,star=2002)
+############### 
+## descomponer una serie
+tdesco <- decompose(tserie)
+plot(tdesco)
+### diferentes graficas
+# primera grafica tenemos las observaciones
+## segundo grafica tenemos la tendencia 
+# tercera la estacionalidad
+# cuarta componente aleatorio
+## esto nos da el primer dato de una serie de tiempo
+######################################################### base con modelo aditivo
+ts.plot()
+names(tdesco)
+tdesco$trend
+####### valor de serie de tiempo 2003 es 667
+tserie
+tdesco$trend
+# 669.4583
+tdesco$seasonal
+# 36.834491
+tdesco$random
+## -39.292824
+669.4583+36.834491-39.292824
+###################################Resultado igual a 667
+#####################################################################
+# tarea 
+#bajar el pib de mexico desde 1950
+## tasa de crecimiento anual del pib
+# hasta 2015 dividir esta grafica en 2 series de tiempo
+# 1 ) grafica de 1950 a 1980
+#2) grafica de 1981 hasta 2015
+# hacer una grafica generak de la st (1950 a 2015 )
+## estas tres graficas mostrarlas en una misma ventana
+# las graficas con titulo principal, etiquta eje x,y
+# y tambien con subtitulos... colores diferentes
+# descomponer las tres series y comprobar que la serie
+# es igual a tendencia, estacionalidad y aleatorio en el año
+# 1980,2000,2015
+## interpretar y analizar las graficas
+# analisis asociado a aspectos economicos y  politicos que hayan pasado
+## agregar elementos a la grafica extra 
+## como la crisis en 1994
