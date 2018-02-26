@@ -1,0 +1,84 @@
+## Yt= St * Tt * Et
+# El modelo aditivo es ,as apropiaso para las fluctuaciones estacionales,
+# o las variaciones alrededor de la tendencia
+# El modelo ,multiplicativo se aplica cuando exista una variación más
+# propircional en el patrón estacional o alrededor de la tendencia
+# con series economicas el modelo multiplicativo es más común
+# Otro uso del modelo multiplicativo es transformar primero los datos
+# hasta que la variación en la serie sea estable en el tiempo
+# para descomponer una serie de tiempo se utilizan diversos métodos
+# por ejemplo la fn decompose () en R, logra obtener los 3 componentes
+# a traves de la fn calcula el componente de tendencia utilizando medias
+# moviles, la estacionalidad son promedios de los indices de estacionalidad
+# que se oibtienen al desestacionalizar la serie por el modelo elegido
+# por ultimo, el componente aleatorio se obtiene eliminando la tandencia y
+# estacionalidad 
+
+install.packages("fpp") #bajamos la paquetería
+install.packages("forecast")
+require (fpp) # la mandamos llamar a nuesta sesión de R
+require (forecast)
+deso <- read.csv("C://Users//USUARIO//Documents//desocupa.csv")
+tsdeso <- ts( deso, frequency = 4, start = 2005)
+tsdeso0 <- ts (deso[1:52,], frequency = 4, start = 2005)
+# tsdeso1 <- ts (as.vector())
+a0 <- decompose(tsdeso0)
+names(a0)
+a1 <- stl(tsdeso0, s.window = 4)
+names(a1)
+a1$time.series
+x11()
+plot(tsdeso0, col= "aquamarine4", 
+     main= "desocupación trimestral",
+     ylab= "tasa de desocupados",
+     xlab= "años")
+lines(a1$time.series[,2], col = "darkgoldenrod", ylab= "tendencia")
+# La bráfica muestra el componente tendencia en "darkgoldenrod" y los datos originales en aquamarine4
+# la tendencia muestra movimientos sobre  toda la serie
+# ignorando la estacionalidad y pequeñas fluctuaciones aleatorias
+x11()
+plot(a1)
+## muestra una descompisición aditiva, el modelo que se uso para descomponer es el stl()
+
+########## ESTACIONALIDAD ##########
+## Ahora para ver la estacionalidad graficamenete podríamos ver gráficas
+# estacionales para esto hay una fn que nos permite ver
+# lo anterior se utiliza la fn monthplot()
+x11()
+monthplot(a1$time.series[,"seasonal"], main= "", ylab = "Seasonal")
+## si el componente estacional es eliminafo de la serie de tiempo se le
+# llama ajuste estacional para un modelo aditivo el ajuste estacional
+# se da por yt- St, para el modelo multiplicativo se define ys/St
+
+#### Ajuste Estacional (desestacionalizar)
+# para hacer un ajuste estacional y desestacionalizar la serie se utiliza
+# la fn seasadj(
+# Si la estacionalidad no es un elemento prioritario en la serie,
+# entonces eliminar la estacionalidad puede resultar benefico para el analisis
+## por ejemplo, los datos de desmpleo tienen un ajuste en un periodo en
+# especifico (diciembre un alza importante por las festividades)
+
+
+x11()
+plot(tsdeso0, col= "deepskyblue4",
+     main= "tasa de desocupación",
+     xlab= "años", )
+lines(seasadj(a1), col="deeppink4", ylab= "ajuste estacional")
+# en esta graica se puede observar que se mantiene la tendencia sin embargo
+# los picos en periodos constantes
+## las series deseetacionalizadas mantienen el componente tendencia y aleatorio
+# por lo que son series con algunos cambios importantes que resultan confusos
+# por lo que es importante ser cuidadosos en estos analisis
+
+######### Ejercicio
+### escoger una serie de tiempo y relizar lo siguiente
+
+#### TIL 1 
+til1 <- read.csv("C://Users//USUARIO//Documents//inforlaboral.csv)
+
+# 1) descomponer la serie con la función stl y planteen esta descomposición
+# con uno de los datos que les arroje
+# 2) grafiquem de esta serie el compónente estacional y el componente tendencia (2 graficas)
+# en estas graficas iusar la fn lines
+# 3) eliminen el componente estacional y grafiquelo... comprueben en una ecuación
+# la formula del modelo aditivo eliminando estacionalidad...
