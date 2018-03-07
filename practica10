@@ -1,0 +1,62 @@
+#### MODELOS LINEALES PARA PRONOSTICAR ####
+
+## Son la aplicación de pronosticos lineales como los metodos de la media, el ingenuo, 
+## el ingenuo estacional y el de deriva el pronostico.
+
+#######---- INGENUO ----#######
+# Esta basado en la ultima observación que arroja la serie de tiempo.
+# es decir, este pronostico asume que la observación más importante es
+# la ultima
+
+### FUNCION EN R ----> naive(serie, h=num pronosticos)
+# h= número de pronostics que requiero
+
+######---- METODO DE LA MEDIA ----######
+# Este metodo le da el mismo peso a todos los datos u observaciones, se asume con este 
+# metodo que todas las observaciones tienen la misma importancia por lo que el pronostico
+# es un promedio de todas las observaciones.
+
+### FUNCIÓN EN R ----> meanf(serie, h= número de pronosticos)
+
+######---- INGENUO ESTACIONAL ----######
+# Este metodo se utiliza en ST con alta estacionalidad este proceso consiste en darle el mayor
+# peso a la mayor ponderación al dato del mismo periodo en el año anterior, p.ejm. trimestre
+# 2 del 2005 es igual al trimestre 2 de 2006
+
+### FUNCIÓN EN R ----> snaive(serie, h=número de pronosticos)
+
+######---- METODO DE LA DERIVA ----######
+# Este metodo consiste en que el pronostico puede incrementar o reducirse sobre el tiempo,
+# dependiendo del tiempo, dependiendo del promedio de los cambios historicos de la ST
+
+### FUNCIÓN EN R ----> rwf(serie, h= núm de pronosticosa, drift = true)
+
+### ejercicio ###
+des0 <- read.csv("C://Users//USUARIO//Documents//desocupa.csv")
+dests <- ts (des0, start = 2005, frequency = 4)
+install.packages("fpp")
+require (fpp)
+desocmod1 <- meanf(dests, h= 10)
+desocmod2 <- naive (dests, h= 10)
+desocmod3 <- snaive (dests, h= 10)
+desocmod4 <- rwf (dests, h= 10, drift = TRUE)
+x11()
+plot(desocmod1, main = "Tasa de desocupación trimestral", col = "green")
+lines(desocmod1$mean, col= "green")
+lines(desocmod2$mean, col= "black")
+lines(desocmod3$mean, col= "pink")
+lines(desocmod4$mean, col= "orange")
+legend("topleft", lty = 1, col = c("green", "black", "gray", "orange"), 
+legend = c("media", "ingenuo", "ingenuo estacional", "deriva"))
+
+## fitted
+## BANORTE
+
+x11()
+plot(desocmod1, main = "Tasa de desocupación trimestral", col = "green")
+lines(desocmod2$fitted, col= "Blue")
+lines(desocmod3$fitted, col= "pink")
+lines(desocmod4$fitted, col= "black")
+legend("topleft", lty = 1, col = c("green", "Blue","pink", "black"), 
+       legend = c("media", "ingenuo", "ingenuo estacional", "deriva"))
+names (desocmod1)
