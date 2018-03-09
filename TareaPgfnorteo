@@ -1,0 +1,42 @@
+##### TAREA #####
+# Ejercicio con una serie de tiempo:
+# apliquen los 4 métodos de pronósticos y grafiquenlos según las gráficas, elijan 
+# que método es el mejor para pronósticar y también grafiquen los datos ajustados
+# y planteados según su gráfica cual es el método que mejor ajusta a los datos reales
+
+### GRUPO FINANCIERO BANORTE (GFNORTEO)
+# Datos historicos diarios de GFNORTEO del 07/03/17-07/03/18
+
+gfnorteo <- read.csv ("file:///C:/Users/Yutzil/Documents/Actuaría/GFNORTEO.MX.csv")
+gfnorteo
+banorte <- ts (gfnorteo [, 5], start = c (2017), frequency =  365)
+install.packages ("fpp")
+require(fpp)
+banorte
+
+gfbmod1 <- meanf (banorte, h = 10)
+gfbmod2 <- naive (banorte, h = 10)
+gfbmod3 <- snaive (banorte, h = 10)
+gfbmod4 <- rwf (banorte, h = 10, drift = TRUE)
+
+x11 ()
+plot (gfbmod1, main = "Precios de Cierre GFNORTEO", col = "deeppink3")
+lines (gfbmod1$mean, col = "aquamarine4")
+lines (gfbmod2$mean, col = "chartreuse3")
+lines (gfbmod3$mean, col = "darkgoldenrod3")
+lines (gfbmod4$mean, col = "blue")
+legend ("topleft", lty = 1, col = c("aquamarine4", "chartreuse3", "darkgoldenrod3", "blue"), 
+        legend = c("Media", "Ingenuo", "Ingenuo Estacional", "Deriva "))
+## El pronóstico más optimista seria el deriva ya que el promedio de los datos historicos
+
+##### DATOS AJUSTADOS #####
+x11 ()
+plot (gfbmod1, main = "Precios de Cerre GFNORTEO", col = "deeppink3")
+lines (gfbmod1$fitted, col = "aquamarine4")
+lines (gfbmod2$fitted, col = "chartreuse3")
+lines (gfbmod3$fitted, col = "darkgoldenrod3")
+lines (gfbmod4$fitted, col = "blue")
+legend ("topleft", lty = 1, col = c ("aquamarine4", "chartreuse3", "darkgoldenrod3", "blue"),
+         legend = c("Media", "Ingenuo", "Ingenuo Estacional", "Deriva "))
+## El mejor pronostico es el que muestra el deriva ya que es el que màs se asemeja a la tendencia
+## de los datos historicos
