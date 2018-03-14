@@ -1,0 +1,107 @@
+### Encuesta Nacional de Ocupación y Empleo ###
+# Datos SOCIODEMOFRÁFICO
+# sdemt<periodo>dbf
+
+#### SONORA ####
+# N° de entidad: 26
+
+install.packages("foreign")
+require(foreign)
+
+###--> TASA DE ASALARIADOS <--###
+# Representa  a  la  población  que  percibe  de  la  unidad económica para la que trabaja 
+# un sueldo, salario o jornal, por las actividades realizadas.
+
+## MH_COL= 2, trabajadores subordinados y remunerados. Asalariados Formales
+## ENT= 26
+## CLASE1 = clasificación de la población en PEA y PNEA
+## CLASE2 = clasificación de la población en ocupada y no ocupada; disponible y no disponible
+## CLASE3 = clasificación de la población en ocupada plena, sin pago, ausente con nexo laboral y retorno, desocupada
+
+# Trismestre 1, 2017
+sdemt117<- data.frame(read.dbf("C:/Users/Yutzil/Documents/Actuaría/8° Semestre/sdemt117.dbf"))
+asalariado <- subset(sdemt117,ENT==26 & MH_COL==2)
+ocupado <- subset(sdemt117,ENT==26 & CLASE2==1)
+ocupados <-nrow(ocupado)
+asalariados <-nrow(asalariado)
+tasaasalariados117 <- ((asalariados/ocupados)*100)
+tasaasalariados117
+### tasaasalariados117= 50.70165
+
+# Trimestre 2, 2017
+sdemt217<- data.frame(read.dbf("C:/Users/Yutzil/Documents/Actuaría/8° Semestre/sdemt217.dbf"))
+asalariado <- subset(sdemt217,ENT==26 & MH_COL==2)
+ocupado <- subset(sdemt217,ENT==26 & CLASE2==1)
+ocupados <-nrow(ocupado)
+asalariados <-nrow(asalariado)
+tasaasalariados217 <- ((asalariados/ocupados)*100)
+tasaasalariados217
+### tasaasalariados217= 51.67948
+
+# Trimestre 3, 2017
+sdemt317<- data.frame(read.dbf("C:/Users/Yutzil/Documents/Actuaría/8° Semestre/sdemt317.dbf"))
+asalariado <- subset(sdemt317,ENT==26 & MH_COL==2)
+ocupado <- subset(sdemt317,ENT==26 & CLASE2==1)
+ocupados <-nrow(ocupado)
+asalariados <-nrow(asalariado)
+tasaasalariados317 <- ((asalariados/ocupados)*100)
+tasaasalariados317
+### tasaasalariados317= 52.07373
+
+# Trimestre 4, 2017
+sdemt417<- data.frame(read.dbf("C:/Users/Yutzil/Documents/Actuaría/8° Semestre/sdemt417.dbf"))
+asalariado <- subset(sdemt417,ENT==26 & MH_COL==2)
+ocupado <- subset(sdemt417,ENT==26 & CLASE2==1)
+ocupados <-nrow(ocupado)
+asalariados <-nrow(asalariado)                  
+tasaasalariados417 <- (asalariados/ocupados)*100
+tasaasalariados417
+### tasaasalariados417= 52.73541
+
+
+
+###--> TASAS DE DESOCUPACIÓN <--###
+# Porcentaje de personas economicamente activas que se encuentran sin trabajar,pero estan buscando trabajo. 
+# Calculo: Población de 15 y más de edad desocupada, 
+# dividida entre la poblaciónn economicamente activa de 15 y más de edad, multiplicada por 100
+## ((15+D/15+A)*100) --> (desocupados/ocupados)*100
+
+# Trimestre 1, 2017
+sdemt117<- data.frame(read.dbf("C:/Users/Yutzil/Documents/Actuaría/8° Semestre/sdemt117.dbf"))
+desocupado <- subset(sdemt117,ENT==26 & CLASE3==6)
+ocupado <- subset(sdemt117,ENT==26 & as.numeric(EDA)<=66 & as.numeric(EDA)>=16) 
+ocupados <-nrow(ocupado)
+desocupados <-nrow(desocupado)
+tasadesocupacion117 <- ((desocupados/ocupados)*100)
+tasadesocupacion117
+### tasadesocupacion117= 2.469978
+
+# Trimestre 2, 2017
+sdemt417<- data.frame(read.dbf("C:/Users/Yutzil/Documents/Actuaría/8° Semestre/sdemt217.dbf"))
+desocupado <- subset(sdemt217,ENT==26 & CLASE3==6)
+ocupado <- subset(sdemt217,ENT==26 & as.numeric(EDA)<=66 & as.numeric(EDA)>=16)
+ocupados <-nrow(ocupado)
+desocupados <-nrow(desocupado)                  
+tasadesocupacion217 <- (desocupados/ocupados)*100
+tasadesocupacion217
+### tasadesocupacion217= 2.886342
+
+# Trimestre 3, 2017
+sdemt317<- data.frame(read.dbf("C:/Users/Yutzil/Documents/Actuaría/8° Semestre/sdemt317.dbf"))
+desocupado <- subset(sdemt317,ENT==26 & CLASE3==6)
+ocupado <- subset(sdemt317,ENT==26 & as.numeric(EDA)<=66 & as.numeric(EDA)>=16)
+ocupados <-nrow(ocupado)
+desocupados <-nrow(desocupado)
+tasadesocupacion317 <- ((desocupados/ocupados)*100)
+tasadesocupacion317
+### tasadesocupacion317= 2.984029
+
+# Trimestre 4, 2017
+sdemt217<- data.frame(read.dbf("C:/Users/Yutzil/Documents/Actuaría/8° Semestre/sdemt417.dbf"))
+desocupado <- subset(sdemt417,ENT==26 & CLASE3==6)
+ocupado <- subset(sdemt417,ENT==26 & as.numeric(EDA)<=66 & as.numeric(EDA)>=16)
+ocupados <-nrow(ocupado)
+desocupados <-nrow(desocupado)
+tasadesocupacion417 <- ((desocupados/ocupados)*100)
+tasadesocupacion417
+### tasadesocupacion417= 2.886342
