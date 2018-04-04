@@ -1,0 +1,8 @@
+x11()
+plot(AirPassengers)
+
+x11()
+plot(log(AirPassengers))#transormar nuestra serie de tiempo o estabilizar la varianza, con logaritmo
+x11()
+plot(diff(log(AirPassengers)))# diferenciación
+aa<- AirPassengers
