@@ -1,0 +1,89 @@
+bimbo <- read.csv("C://Users//USUARIO//Downloads//BIMBOA.MX.csv") [,5]
+bimbot <- ts(bimbo, frequency = 252, start = 2017)
+##### Vampos a revisar si la serie es estacionaria
+#### eso lo hacemos con el adf.test
+require(fpp)
+adf.test (bimbot)
+####en esta prueba esperamos un p-value menor a 0.05
+#### sin embargo en la serie bimbot obtenemos un p-value
+#### de 0.08 por lo que hay que aplicar una diferenciación
+#### para convertit la serie es estacionaria...
+
+dbimbot <- diff(bimbot)## diferenciación a la st
+### para convertirla en estacionaria
+adf.test(dbimbot)
+### ahora que tenemos la st estacionaria ya podemos
+### aplicar un modelo arima, por lo que hay que elegir
+### los valores de p, d y q para elegir los valores de p y q
+### se utiliza la función de autocorrelación (acf) 
+### y la función de autocorrelación parcial (pacf)
+###primero aplicamos la función de autocorrelación para elegir el
+### valor de q
+acf(dbimbot)
+### una vez que apliquemos el acf vamos a observar la gráfica y ver
+### cuantas lineas sobrepasan el margen y el número de líneas son 
+### el valor de q
+pacf(dbimbot)
+
+mod1bim <- Arima (bimbot, order = c(0,1,0))
+mod1bim
+mod2bim <- Arima(bimbot, order = c(1,1,2))
+mod2bim
+mod3bim <- Arima(bimbot, order = c(3,1,2))
+mod3bim
+mod4bim <- Arima(bimbot, order = c(2,1,2))
+mod4bim ### elegimos este modelo por tener el AICc más bajo
+mod4 <- forecast(mod4bim, h= 12)
+x11()
+plot(forecast(mod4bim, h= 12), include= 18) ### INCLUDE solo nos da los utimos 18 datos
+X11()
+plot(forecast(mod4bim, h= 12), include= 45)
+mod5bim <- auto.arima(bimbot)
+mod5bim
+x11()
+plot(forecast(mod5bim, h= 12), include= 45)
+
+### Elegir dos series de tiempo diferentes
+### a las que hemos visto en clase y repetir el procedimiento
+### para elegir un modelo arima "mejor" según los criterios AICC y
+### compararlos con el modelo auto, arima
+
+####### Matrícula de egresados en la Universidad Autónoma Chapingo 2013-2014 a nivel licenciatura
+egre <- read.csv("C://Users//USUARIO//Downloads//Matrícula egresados y titulados Licenciatura UACh 2013-2014.csv") [,17]
+egrest <- ts(egre, frequency = 20, start = 2013)
+adf.test (egrest)
+#### p-value = 0.8813
+
+degrest <- diff(egrest)
+adf.test(degrest)
+#### p-value = 0.6528
+
+
+
+degrest1 <- diff(degrest)
+adf.test(degrest1)
+#### p-value = 0.1478
+
+degrest2 <- diff(degrest1)
+adf.test(degrest2)
+#### p-value = 0.01
+
+######## Aplicación de autocorrelación ##########
+acf(degrest2) ### p=2
+pacf(degrest2) ### q=1
+
+mod1egre <- Arima (egrest, order = c(2,3,1))
+mod1egre
+mod2egre <- Arima (egrest, order = c(3,3,1))
+mod2egre
+mod1egre <- Arima (egrest, order = c(2,1,1))
+mod1egre
+mod1egre <- Arima (egrest, order = c(2,1,1))
+mod1egre
+
+
+
+
+### library (help= "datasets")
+### help(discoveries)
+
