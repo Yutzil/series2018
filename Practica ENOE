@@ -1,0 +1,72 @@
+########## asalariados ##########
+
+require (fpp)
+asalariados <- read.csv("C://Users//USUARIO//Documents//asalariado.csv")
+asats <- ts( asalariados, frequency = 4, start = 2005, end = 2015)
+adf.test(asats) #### p-value = 0.02068
+acf(asats) #### 8
+pacf(asats) #### 1
+
+mod1asalariados <- Arima (asats, order = c(8,0,1))
+mod1asalariados####  AICc=136.2 
+mod2asalariados <- Arima (asats, order = c(9,0,2))
+mod2asalariados#### AICc=134.84 
+mod3asalariados <- Arima (asats, order = c(8,0,1))
+mod3asalariados####  AICc=136.2
+mod4asalariados <- Arima (asats, order = c(9,0,1))
+mod4asalariados####  AICc=131.57
+mod5asalariados <- Arima (asats, order = c(9,0,3))
+mod5asalariados####  AICc=138.26 
+X11()
+plot(forecast(mod4asalariados, h= 8), include= 41)
+mod6asalariados <- auto.arima(asats)
+mod6asalariados #### AICc=94.4 
+x11()
+plot(forecast(mod6asalariados, h= 8), include= 41)
+
+
+asala<- ts( asalariados, frequency = 4, start = 2005)
+x11()
+layout(1:2)
+plot(forecast(mod6asalariados, h= 8), include= 41)
+plot(asala)
+
+
+########## DESOCUPACIÓN ##########
+
+desocupacion <- read.csv("C://Users//USUARIO//Documents//desocupación.csv")
+desocut <- ts( desocupacion, frequency = 4, start = 2005, end = 2015)
+adf.test(desocut) #### p-value = 0.9847
+ddesocut <- diff(desocut)
+adf.test(ddesocut) #### p-value = 0.4219
+ddesocut1 <- diff(ddesocut)
+adf.test(ddesocut1) #### p-value = 0.01287
+
+
+acf(ddesocut1) #### 15
+pacf(ddesocut1) #### 1
+
+mod1desocupacion <- Arima (desocut, order = c(15,2,2))
+mod1desocupacion####  AICc=81.72 
+mod2desocupacion <- Arima (desocut, order = c(14,2,2))
+mod2desocupacion####  AICc=74.73  
+mod3desocupacion <- Arima (desocut, order = c(13,2,2))
+mod3desocupacion####   AICc=69.68
+mod4desocupacion <- Arima (desocut, order = c(3,2,1))
+mod4desocupacion####   AICc=36.19
+X11()
+plot(forecast(mod4desocupacion, h= 8), include= 41)
+mod5desocupacion <- auto.arima(desocut)
+mod5desocupacion #### AICc=23.88
+x11()
+plot(forecast(mod5desocupacion, h= 8), include= 41)
+
+
+deso<- ts( desocupacion, frequency = 4, start = 2005)
+x11()
+layout(1:2)
+plot(forecast(mod5desocupacion, h= 8), include= 41)
+plot(deso)
+
+##### subocupación
+##### TIL 1
