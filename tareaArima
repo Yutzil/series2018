@@ -1,0 +1,65 @@
+library (help= "datasets")
+help(discoveries)
+help(dismiles)
+
+#######  Passenger Miles on Commercial US dislines, 1937–1960
+air<- airmiles
+adf.test(air)
+#### p-value = 0.895
+
+dair <- diff(air)## diferenciación a la st para convertirla en estacionaria
+adf.test(dair)
+####  p-value = 0.02265
+
+acf(dair) #### 0
+pacf(dair) #### 0
+
+mod1air <- Arima (air, order = c(0,1,0))
+mod1air#### AICc=411.45
+mod2air <- Arima (air, order = c(1,1,2))
+mod2air#### AICc=397.26 
+mod3air <- Arima (air, order = c(3,1,2))
+mod3air#### AICc=402.94
+
+#### elegimos el mod2air por tener el AICc más bajo AICc=397.26 
+mod2 <- forecast(mod2air, h= 12)
+X11()
+plot(forecast(mod2air, h= 12))
+mod4air <- auto.arima(air)
+mod4air#### AICc=375.3
+
+x11()
+plot(forecast(mod4dis, h= 12))
+
+
+
+#########################################
+######### Yearly Numbers of Important Discoveries
+
+dis<- discoveries
+adf.test(dis)
+#### p-value = 0.03462
+
+ddis <- diff(dis)## diferenciación a la st para convertirla en estacionaria
+adf.test(ddis)
+####  p-value = 0.01
+
+acf(ddis) #### 2
+pacf(ddis) #### 2
+
+mod1dis <- Arima (dis, order = c(2,1,2))
+mod1dis#### AICc=438.33
+mod2dis <- Arima (dis, order = c(3,1,2))
+mod2dis#### AICc=443.6 
+mod3dis <- Arima (dis, order = c(3,1,4))
+mod3dis#### AICc=436.93
+
+#### elegimos el mod2dis por tener el AICc más bajo AICc=436.93 
+mod3 <- forecast(mod3dis, h= 12)
+X11()
+plot(forecast(mod3dis, h= 12), include= 25)
+mod4dis <- auto.arima(dis)
+mod4dis
+
+x11()
+plot(forecast(mod4dis, h= 12), include= 25)
