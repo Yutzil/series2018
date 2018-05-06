@@ -1,7 +1,7 @@
 ########## asalariados ##########
 
 require (fpp)
-asalariados <- read.csv("C://Users//USUARIO//Documents//asalariado.csv")
+asalariados <- read.csv("file:///C:/Users/Yutzil/Documents/Actuaría/8° Semestre/Series de tiempo/clases/asalariados.csv")
 asats <- ts( asalariados, frequency = 4, start = 2005, end = 2015)
 adf.test(asats) #### p-value = 0.02068
 acf(asats) #### 8
@@ -34,7 +34,7 @@ plot(asala)
 
 ########## DESOCUPACIÓN ##########
 
-desocupacion <- read.csv("C://Users//USUARIO//Documents//desocupación.csv")
+desocupacion <- read.csv("C:/Users/Yutzil/Documents/Actuaría/8° Semestre/Series de tiempo/clases/desocupación.csv")
 desocut <- ts( desocupacion, frequency = 4, start = 2005, end = 2015)
 adf.test(desocut) #### p-value = 0.9847
 ddesocut <- diff(desocut)
@@ -68,5 +68,76 @@ layout(1:2)
 plot(forecast(mod5desocupacion, h= 8), include= 41)
 plot(deso)
 
-##### subocupación
-##### TIL 1
+
+########## subocupación ##########
+
+require (fpp)
+subocupación <- read.csv("C:/Users/Yutzil/Documents/Actuaría/8° Semestre/Series de tiempo/clases/subocupacion.csv")
+subocupats <- ts( subocupación, frequency = 4, start = 2005, end = 2015)
+adf.test(subocupats) #### p-value = 0.4601
+dsubocupats <- diff(subocupats)
+adf.test(dsubocupats) #### p-value = 0.0187
+acf(dsubocupats) #### 0
+pacf(dsubocupats) #### 0
+
+mod1subocupación <- Arima (subocupats, order = c(0,1,0))
+mod1subocupación#### AICc=103.63 
+mod2subocupación <- Arima (subocupats, order = c(1,1,0))
+mod2subocupación#### AICc=102.37 
+mod3subocupación <- Arima (subocupats, order = c(0,1,1))
+mod3subocupación####  AICc=101.91
+mod4subocupación <- Arima (subocupats, order = c(1,1,1))
+mod4subocupación####  AICc=102.24
+mod5subocupación <- Arima (subocupats, order = c(1,1,2))
+mod5subocupación####  AICc=103.99
+X11()
+plot(forecast(mod3subocupación, h= 8), include= 41)
+mod6subocupación <- auto.arima(subocupats)
+mod6subocupación ####  AICc=103.63  
+x11()
+plot(forecast(mod6subocupación, h= 8), include= 41)
+
+
+subocupa<- ts( subocupación, frequency = 4, start = 2005)
+x11()
+layout(1:2)
+plot(forecast(mod6subocupación, h= 8), include= 41)
+plot(subocupa)
+
+
+########## TIL1 ##########
+
+require (fpp)
+til1 <- read.csv("C:/Users/Yutzil/Documents/Actuaría/8° Semestre/Series de tiempo/clases/til1.csv")
+til1ts <- ts( til1, frequency = 4, start = 2005, end = 2015)
+adf.test(til1ts) #### p-value = 0.7502
+dtil1ts <- diff(til1ts)
+adf.test(dtil1ts) #### p-value = 0.5011
+dtil1ts1 <- diff(dtil1ts)
+adf.test(dtil1ts1) #### p-value = 0.03326
+acf(dtil1ts1) #### 12
+pacf(dtil1ts1) #### 2
+
+mod1til1 <- Arima (til1ts, order = c(12,2,2))
+mod1til1#### AICc=81.41 
+mod2til1 <- Arima (til1ts, order = c(11,2,2))
+mod2til1#### AAICc=77.58
+mod3til1 <- Arima (til1ts, order = c(9,2,2))
+mod3til1####  AICc=73.66
+mod4til1 <- Arima (til1ts, order = c(8,2,4))
+mod4til1####  AICc=73.52
+mod5til1 <- Arima (til1ts, order = c(6,2,1))
+mod5til1####  AICc=64.39
+X11()
+plot(forecast(mod5til1, h= 8), include= 41)
+mod6til1 <- auto.arima(til1ts)
+mod6til1 #### AICc=46.34 
+x11()
+plot(forecast(mod6til1, h= 8), include= 41)
+
+
+till<- ts( til1, frequency = 4, start = 2005)
+x11()
+layout(1:2)
+plot(forecast(mod6til1, h= 8), include= 41)
+plot(till)
